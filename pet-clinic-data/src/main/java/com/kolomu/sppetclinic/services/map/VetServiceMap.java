@@ -1,11 +1,11 @@
 package com.kolomu.sppetclinic.services.map;
 
 import com.kolomu.sppetclinic.model.Vet;
-import com.kolomu.sppetclinic.services.CrudService;
+import com.kolomu.sppetclinic.services.VetService;
 
 import java.util.Set;
 
-public class VetServiceMap extends AbstractMapService<Vet, Long> implements CrudService<Vet, Long> {
+public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetService {
 
     @Override
     public Set<Vet> findAll() {
