@@ -2,9 +2,11 @@ package com.kolomu.sppetclinic.services.map;
 
 import com.kolomu.sppetclinic.model.Vet;
 import com.kolomu.sppetclinic.services.VetService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetService {
 
     @Override

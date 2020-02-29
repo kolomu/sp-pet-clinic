@@ -2,9 +2,11 @@ package com.kolomu.sppetclinic.services.map;
 
 import com.kolomu.sppetclinic.model.Owner;
 import com.kolomu.sppetclinic.services.OwnerService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements OwnerService {
 
     @Override

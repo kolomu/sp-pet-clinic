@@ -4,8 +4,6 @@ import com.kolomu.sppetclinic.model.Owner;
 import com.kolomu.sppetclinic.model.Vet;
 import com.kolomu.sppetclinic.services.OwnerService;
 import com.kolomu.sppetclinic.services.VetService;
-import com.kolomu.sppetclinic.services.map.OwnerServiceMap;
-import com.kolomu.sppetclinic.services.map.VetServiceMap;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -16,9 +14,11 @@ public class DataLoader implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
 
-    public DataLoader() {
-        this.ownerService = new OwnerServiceMap();
-        this.vetService = new VetServiceMap();
+    // Spring DI -> via Spring IoC Container (constructor DI)
+    // no longer required... @Autowired
+    public DataLoader(OwnerService ownerService, VetService vetService) {
+        this.ownerService = ownerService;
+        this.vetService = vetService;
     }
 
     @Override

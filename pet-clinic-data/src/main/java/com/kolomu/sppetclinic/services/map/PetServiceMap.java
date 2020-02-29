@@ -2,9 +2,11 @@ package com.kolomu.sppetclinic.services.map;
 
 import com.kolomu.sppetclinic.model.Pet;
 import com.kolomu.sppetclinic.services.PetService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class PetServiceMap extends AbstractMapService<Pet, Long> implements PetService {
 
     @Override
