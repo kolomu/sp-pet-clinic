@@ -1,11 +1,9 @@
 package com.kolomu.sppetclinic.bootstrap;
 
-import com.kolomu.sppetclinic.model.Owner;
-import com.kolomu.sppetclinic.model.Pet;
-import com.kolomu.sppetclinic.model.PetType;
-import com.kolomu.sppetclinic.model.Vet;
+import com.kolomu.sppetclinic.model.*;
 import com.kolomu.sppetclinic.services.OwnerService;
 import com.kolomu.sppetclinic.services.PetTypeService;
+import com.kolomu.sppetclinic.services.SpecialtyService;
 import com.kolomu.sppetclinic.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -19,18 +17,27 @@ public class DataLoader implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
     private final PetTypeService petTypeService;
+    private final SpecialtyService specialtyService;
 
     // Spring DI -> via Spring IoC Container (constructor DI)
     // no longer required... @Autowired
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialtyService specialtyService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
+        this.specialtyService = specialtyService;
     }
 
     @Override
     public void run(String... args) throws Exception {
+        // when we persist the data later, we don't want to have multiple values every time we start the Application!
+        int count = petTypeService.findAll().size();
+        if(count == 0) {
+            loadData();
+        }
+    }
 
+    private void loadData() {
         PetType dog = new PetType();
         dog.setName("Dog");
         PetType savedDogPetType = petTypeService.save(dog);
@@ -38,6 +45,18 @@ public class DataLoader implements CommandLineRunner {
         PetType cat = new PetType();
         cat.setName("Cat");
         PetType savedCatPetType = petTypeService.save(cat);
+
+        Speciality radiology = new Speciality();
+        radiology.setDescription("Radiology");
+        Speciality savedRadiology = specialtyService.save(radiology);
+
+        Speciality surgery = new Speciality();
+        surgery.setDescription("Surgery");
+        Speciality savedSurgery = specialtyService.save(surgery);
+
+        Speciality dentistry = new Speciality();
+        dentistry.setDescription("Dentistry");
+        Speciality savedDentistry = specialtyService.save(dentistry);
 
         Owner owner1 = new Owner();
         owner1.setFirstName("Michael");
@@ -75,11 +94,13 @@ public class DataLoader implements CommandLineRunner {
         Vet vet1 = new Vet();
         vet1.setFirstName("Sam");
         vet1.setLastName("Axe");
+        vet1.getSpecialities().add(savedRadiology);
         vetService.save(vet1);
 
         Vet vet2 = new Vet();
         vet2.setFirstName("Bob");
         vet2.setLastName("Boss");
+        vet2.getSpecialities().add(savedDentistry);
         vetService.save(vet2);
 
         System.out.println("Loaded Vets...");
