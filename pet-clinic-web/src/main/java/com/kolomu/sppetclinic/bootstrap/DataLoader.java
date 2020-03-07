@@ -1,8 +1,10 @@
 package com.kolomu.sppetclinic.bootstrap;
 
 import com.kolomu.sppetclinic.model.Owner;
+import com.kolomu.sppetclinic.model.PetType;
 import com.kolomu.sppetclinic.model.Vet;
 import com.kolomu.sppetclinic.services.OwnerService;
+import com.kolomu.sppetclinic.services.PetTypeService;
 import com.kolomu.sppetclinic.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -13,16 +15,27 @@ public class DataLoader implements CommandLineRunner {
 
     private final OwnerService ownerService;
     private final VetService vetService;
+    private final PetTypeService petTypeService;
 
     // Spring DI -> via Spring IoC Container (constructor DI)
     // no longer required... @Autowired
-    public DataLoader(OwnerService ownerService, VetService vetService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
+        this.petTypeService = petTypeService;
     }
 
     @Override
     public void run(String... args) throws Exception {
+
+        PetType dog = new PetType();
+        dog.setName("Dog");
+        PetType savedDogPetType = petTypeService.save(dog);
+
+        PetType cat = new PetType();
+        cat.setName("Cat");
+        PetType savedCatPetType = petTypeService.save(cat);
+
         Owner owner1 = new Owner();
         owner1.setFirstName("Michael");
         owner1.setLastName("Mustermann");
