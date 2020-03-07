@@ -1,6 +1,7 @@
 package com.kolomu.sppetclinic.bootstrap;
 
 import com.kolomu.sppetclinic.model.Owner;
+import com.kolomu.sppetclinic.model.Pet;
 import com.kolomu.sppetclinic.model.PetType;
 import com.kolomu.sppetclinic.model.Vet;
 import com.kolomu.sppetclinic.services.OwnerService;
@@ -8,6 +9,8 @@ import com.kolomu.sppetclinic.services.PetTypeService;
 import com.kolomu.sppetclinic.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 /* When Spring Context is completely up and ready, it will call the run method */
 @Component
@@ -39,11 +42,32 @@ public class DataLoader implements CommandLineRunner {
         Owner owner1 = new Owner();
         owner1.setFirstName("Michael");
         owner1.setLastName("Mustermann");
+        owner1.setAddress("123 Brickerel");
+        owner1.setCity("Miami");
+        owner1.setTelephone("1231231234");
+
+        Pet mikesPet = new Pet();
+        mikesPet.setPetType(savedDogPetType);
+        mikesPet.setOwner(owner1);
+        mikesPet.setBirthDate(LocalDate.now());
+        mikesPet.setName("Rosco");
+        owner1.getPets().add(mikesPet);
         ownerService.save(owner1);
 
         Owner owner2 = new Owner();
         owner2.setFirstName("Susan");
         owner2.setLastName("Sonnenschein");
+        owner2.setAddress("123 Brickerel");
+        owner2.setCity("Miami");
+        owner2.setTelephone("1231231234");
+
+        Pet susansCat = new Pet();
+        susansCat.setPetType(savedCatPetType);
+        susansCat.setOwner(owner2);
+        susansCat.setName("Miau");
+        susansCat.setBirthDate(LocalDate.now());
+        owner2.getPets().add(susansCat);
+
         ownerService.save(owner2);
 
         System.out.println("Loaded owners...");
