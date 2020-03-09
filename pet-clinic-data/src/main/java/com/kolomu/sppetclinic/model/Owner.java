@@ -1,13 +1,26 @@
 package com.kolomu.sppetclinic.model;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
+@Table(name="owners") // set up the table as owners table inside the DB
 public class Owner extends Person {
 
+    @Column(name="address")
     private String address;
+
+    @Column(name="city")
     private String city;
+
+    @Column(name="telephone")
     private String telephone;
+
+    // set up a relationship mapping
+    // If I have an owner and delete him the pet will also get deleted.
+    // every owner can have multiple pets
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Set<Pet> pets = new HashSet<>();
 
     public String getAddress() {
