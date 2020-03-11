@@ -5,11 +5,15 @@ import com.kolomu.sppetclinic.model.Pet;
 import com.kolomu.sppetclinic.services.OwnerService;
 import com.kolomu.sppetclinic.services.PetService;
 import com.kolomu.sppetclinic.services.PetTypeService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
+@Profile({"default", "map"}) // if we don't specify an active profile the default is fallback!
+// we only want this class implemented if the default class is active!
+// If other profile is selected -> default not active -> this class don't get implemeted ;)
 public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements OwnerService {
 
     private final PetTypeService petTypeService;
