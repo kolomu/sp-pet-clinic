@@ -73,6 +73,10 @@ public class DataLoader implements CommandLineRunner {
         owner1.getPets().add(mikesPet);
         ownerService.save(owner1);
 
+        // Builder Pattern by using @Builder and @AllArgsConstructor
+        // Set up chain of constructor so all properties can be selected! see Owner
+        Owner.builder().address("ASDF").firstName("Tom").build();
+
         Owner owner2 = new Owner();
         owner2.setFirstName("Susan");
         owner2.setLastName("Sonnenschein");
